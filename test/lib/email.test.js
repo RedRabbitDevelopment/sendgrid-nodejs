@@ -207,6 +207,15 @@ describe('Email', function () {
         expect(email.files[0].contentType).to.equal('image/png');
       });
     });
+
+    it('should support streams', function() {
+      var email = new Email();
+      var stream = fs.createReadStream(files[0]);
+      email.addFile({filename: 'content-image.png', stream: stream, contentType: 'image/png', cid: 'testcid'});
+      expect(email.files[0].cid).to.equal('testcid');
+      expect(email.files[0].filename).to.equal('content-image.png');
+      expect(email.files[0].contentType).to.equal('image/png');
+    });
   });
 
   describe('custom headers', function() {
